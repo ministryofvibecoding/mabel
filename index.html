@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mabel – Marble Habit Jar</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bitcount+Prop+Single:wght@100..700&family=Manrope:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    background: linear-gradient(180deg, #6E5FA0 0%, #463A78 42%, #1C1738 100%);
+    min-height: 100vh;
+    color: #F3EFEA;
+  }
+
+  .bg-glow {
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(110% 55% at 100% 0%, rgba(214,168,190,.35), transparent 52%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .wrap {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* Nav */
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 28px 0 0;
+  }
+
+  .nav-logo {
+    font-family: 'Bitcount Prop Single', system-ui, sans-serif;
+    font-size: 22px;
+    font-weight: 600;
+    background: linear-gradient(96deg, #F6EFFF, #ECD6EE 42%, #F8CBA6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-decoration: none;
+  }
+
+  .nav-link {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255,255,255,.55);
+    text-decoration: none;
+  }
+
+  .nav-link:hover { color: rgba(255,255,255,.85); }
+
+  /* Hero */
+  .hero {
+    text-align: center;
+    padding: 64px 0 48px;
+  }
+
+  .mascot {
+    width: 140px;
+    height: auto;
+    margin: 0 auto 32px;
+    display: block;
+    animation: bob 3s ease-in-out infinite;
+  }
+
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+
+  .hero-title {
+    font-family: 'Bitcount Prop Single', system-ui, sans-serif;
+    font-size: clamp(42px, 10vw, 64px);
+    font-weight: 600;
+    line-height: 1.1;
+    background: linear-gradient(96deg, #F6EFFF, #ECD6EE 42%, #F8CBA6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 16px;
+  }
+
+  .hero-sub {
+    font-size: 18px;
+    font-weight: 400;
+    color: rgba(255,255,255,.7);
+    line-height: 1.6;
+    max-width: 420px;
+    margin: 0 auto 36px;
+  }
+
+  .app-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,255,255,.12);
+    border: 1px solid rgba(255,255,255,.2);
+    border-radius: 14px;
+    padding: 14px 28px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 600;
+    transition: background .2s, border-color .2s;
+  }
+
+  .app-btn:hover {
+    background: rgba(255,255,255,.2);
+    border-color: rgba(255,255,255,.35);
+  }
+
+  .app-btn svg { flex-shrink: 0; }
+
+  /* Features */
+  .features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 48px 0;
+  }
+
+  @media (max-width: 480px) {
+    .features { grid-template-columns: 1fr; }
+  }
+
+  .feature {
+    background: rgba(255,255,255,.06);
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 18px;
+    padding: 22px;
+  }
+
+  .feature-icon {
+    font-size: 26px;
+    margin-bottom: 10px;
+  }
+
+  .feature-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 6px;
+  }
+
+  .feature-body {
+    font-size: 13px;
+    color: rgba(255,255,255,.55);
+    line-height: 1.55;
+  }
+
+  /* Quote */
+  .quote {
+    text-align: center;
+    padding: 16px 0 64px;
+  }
+
+  .quote-text {
+    font-size: 20px;
+    font-weight: 400;
+    color: rgba(255,255,255,.65);
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0 auto;
+    font-style: italic;
+  }
+
+  /* Screenshots */
+  .screenshots {
+    padding: 16px 0 64px;
+  }
+
+  .screenshots .section-title {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+
+  .phone-scroll {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 12px;
+    scrollbar-width: none;
+  }
+
+  .phone-scroll::-webkit-scrollbar { display: none; }
+
+  .phone-frame {
+    flex: 0 0 auto;
+    scroll-snap-align: center;
+    width: 200px;
+    position: relative;
+  }
+
+  .phone-frame img {
+    width: 100%;
+    display: block;
+    border-radius: 28px;
+    box-shadow: 0 20px 50px rgba(0,0,0,.35);
+  }
+
+  .screenshot-caption {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,.3);
+    margin-top: 10px;
+  }
+
+  /* Privacy */
+  .privacy {
+    border-top: 1px solid rgba(255,255,255,.1);
+    padding: 56px 0;
+  }
+
+  .section-title {
+    font-family: 'Bitcount Prop Single', system-ui, sans-serif;
+    font-size: 28px;
+    font-weight: 600;
+    background: linear-gradient(96deg, #F6EFFF, #ECD6EE 42%, #F8CBA6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin-bottom: 32px;
+  }
+
+  .privacy-block { margin-bottom: 28px; }
+
+  .privacy-block h3 {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,.4);
+    margin-bottom: 8px;
+  }
+
+  .privacy-block p {
+    font-size: 14px;
+    color: rgba(255,255,255,.65);
+    line-height: 1.7;
+  }
+
+  .privacy-block a {
+    color: #C9B8F0;
+    text-decoration: none;
+  }
+
+  .privacy-block a:hover { text-decoration: underline; }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid rgba(255,255,255,.08);
+    padding: 28px 0 48px;
+    text-align: center;
+    font-size: 12px;
+    color: rgba(255,255,255,.25);
+    line-height: 1.8;
+  }
+
+  footer a { color: rgba(255,255,255,.35); text-decoration: none; }
+  footer a:hover { color: rgba(255,255,255,.6); }
+</style>
+</head>
+<body>
+<div class="bg-glow"></div>
+
+<div class="wrap">
+  <nav>
+    <span class="nav-logo">Mabel</span>
+    <a href="#privacy" class="nav-link">Privacy policy</a>
+  </nav>
+
+  <section class="hero">
+    <svg class="mascot" viewBox="0 0 261 332" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M130.454 315.098C171.466 315.098 204.713 308.808 204.713 301.049C204.713 293.29 171.466 287 130.454 287C89.4425 287 56.1957 293.29 56.1957 301.049C56.1957 308.808 89.4425 315.098 130.454 315.098Z" fill="url(#s_p0)"/>
+      <path d="M114.399 66.2308C107.709 46.1608 79 42.5 83 17.5" stroke="url(#s_p1)" stroke-width="10.035" stroke-linecap="round"/>
+      <path d="M146.51 66.2308C153.2 46.1608 178 38 173.5 15" stroke="url(#s_p2)" stroke-width="10.035" stroke-linecap="round"/>
+      <path d="M91.3321 26.0909C98.5369 26.0909 104.378 20.2502 104.378 13.0454C104.378 5.84063 98.5369 0 91.3321 0C84.1273 0 78.2867 5.84063 78.2867 13.0454C78.2867 20.2502 84.1273 26.0909 91.3321 26.0909Z" fill="url(#s_p3)"/>
+      <path opacity="0.7" d="M87.3182 12.6441C89.3133 12.6441 90.9307 11.0266 90.9307 9.03147C90.9307 7.03629 89.3133 5.41888 87.3182 5.41888C85.323 5.41888 83.7056 7.03629 83.7056 9.03147C83.7056 11.0266 85.323 12.6441 87.3182 12.6441Z" fill="white"/>
+      <path d="M165.577 26.0909C172.782 26.0909 178.622 20.2502 178.622 13.0455C178.622 5.84065 172.782 0 165.577 0C158.372 0 152.531 5.84065 152.531 13.0455C152.531 20.2503 158.372 26.0909 165.577 26.0909Z" fill="url(#s_p3)"/>
+      <path opacity="0.7" d="M161.563 12.6441C163.558 12.6441 165.176 11.0266 165.176 9.03147C165.176 7.03629 163.558 5.41888 161.563 5.41888C159.568 5.41888 157.95 7.03629 157.95 9.03147C157.95 11.0266 159.568 12.6441 161.563 12.6441Z" fill="white"/>
+      <path d="M115.598 237.874H93.1293C87.3844 237.874 82.7272 243.49 82.7272 250.418C82.7272 257.346 87.3844 262.962 93.1293 262.962H115.598C121.343 262.962 126 257.346 126 250.418C126 243.49 121.343 237.874 115.598 237.874Z" fill="url(#s_p4)"/>
+      <path d="M168.204 237.874H144.886C138.924 237.874 134.091 243.49 134.091 250.418C134.091 257.346 138.924 262.962 144.886 262.962H168.204C174.167 262.962 179 257.346 179 250.418C179 243.49 174.167 237.874 168.204 237.874Z" fill="url(#s_p4)"/>
+      <path d="M130.454 230.804C183.659 230.804 226.79 187.673 226.79 134.469C226.79 81.2638 183.659 38.1328 130.454 38.1328C77.2498 38.1328 34.1188 81.2638 34.1188 134.469C34.1188 187.673 77.2498 230.804 130.454 230.804Z" fill="url(#s_p5)"/>
+      <path d="M130.454 230.804C183.659 230.804 226.79 187.673 226.79 134.469C226.79 81.2638 183.659 38.1328 130.454 38.1328C77.2498 38.1328 34.1188 81.2638 34.1188 134.469C34.1188 187.673 77.2498 230.804 130.454 230.804Z" fill="url(#s_p6)"/>
+      <path d="M104.393 109.602C119.462 102.575 128.07 89.1423 123.62 79.5988C119.17 70.0553 103.347 68.015 88.2778 75.0416C73.2091 82.0683 64.6011 95.501 69.0514 105.045C73.5016 114.588 89.3248 116.628 104.393 109.602Z" fill="url(#s_p7)"/>
+      <path opacity="0.65" d="M162.566 91.3182C165.337 91.3182 167.584 89.0718 167.584 86.3007C167.584 83.5296 165.337 81.2832 162.566 81.2832C159.795 81.2832 157.549 83.5296 157.549 86.3007C157.549 89.0718 159.795 91.3182 162.566 91.3182Z" fill="white"/>
+      <path d="M94.3286 126.441C103.695 115.737 113.061 115.737 122.427 126.441" stroke="#4A3F7A" stroke-width="7.52622" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M138.482 126.441C147.848 115.737 157.214 115.737 166.58 126.441" stroke="#4A3F7A" stroke-width="7.52622" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M100.35 152.531C120.42 173.939 140.489 173.939 160.559 152.531" stroke="#4A3F7A" stroke-width="7.52622" stroke-linecap="round" stroke-linejoin="round"/>
+      <defs>
+        <radialGradient id="s_p0" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(130.454 301.049) scale(74.2587 14.049)"><stop stop-color="#1C1738" stop-opacity="0.3"/><stop offset="1" stop-color="#1C1738" stop-opacity="0"/></radialGradient>
+        <linearGradient id="s_p1" x1="130.454" y1="2.007" x2="130.454" y2="74.2587" gradientUnits="userSpaceOnUse"><stop stop-color="#FDFBFF"/><stop offset="0.6" stop-color="#ECE9F6"/><stop offset="1" stop-color="#D8DBEF"/></linearGradient>
+        <linearGradient id="s_p2" x1="130.455" y1="2.007" x2="130.455" y2="74.2588" gradientUnits="userSpaceOnUse"><stop stop-color="#FDFBFF"/><stop offset="0.6" stop-color="#ECE9F6"/><stop offset="1" stop-color="#D8DBEF"/></linearGradient>
+        <linearGradient id="s_p3" x1="130" y1="0" x2="130" y2="26" gradientUnits="userSpaceOnUse"><stop stop-color="#FDFBFF"/><stop offset="0.6" stop-color="#ECE9F6"/><stop offset="1" stop-color="#D8DBEF"/></linearGradient>
+        <linearGradient id="s_p4" x1="126" y1="237" x2="126" y2="263" gradientUnits="userSpaceOnUse"><stop stop-color="#F6F1FB"/><stop offset="0.55" stop-color="#E7E6F3"/><stop offset="1" stop-color="#D2D6EC"/></linearGradient>
+        <radialGradient id="s_p5" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(107.334 95.9342) scale(138.723)"><stop stop-color="white"/><stop offset="0.42" stop-color="#F2EDF8"/><stop offset="0.72" stop-color="#DDE0F1"/><stop offset="1" stop-color="#CBCFE8"/></radialGradient>
+        <radialGradient id="s_p6" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(172.842 188.416) scale(105.969)"><stop stop-color="#F6DCCB" stop-opacity="0.75"/><stop offset="1" stop-color="#F6DCCB" stop-opacity="0"/></radialGradient>
+        <radialGradient id="s_p7" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(96.3357 92.3217) rotate(-25) scale(30.1049 19.0664)"><stop stop-color="white" stop-opacity="0.95"/><stop offset="1" stop-color="white" stop-opacity="0"/></radialGradient>
+      </defs>
+    </svg>
+
+    <h1 class="hero-title">Mabel</h1>
+    <p class="hero-sub">Earn a marble for every day you show up. Fill your jar, seal it, keep it forever.</p>
+    <a href="#" class="app-btn">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/></svg>
+      Download on the App Store
+    </a>
+  </section>
+
+  <section class="features">
+    <div class="feature">
+      <div class="feature-icon">🪨</div>
+      <div class="feature-title">Earn your marbles</div>
+      <div class="feature-body">One marble per day you show up. No shortcuts, no catch-up days.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🫙</div>
+      <div class="feature-title">Fill and seal</div>
+      <div class="feature-body">30 marbles fills a jar. Seal it when you're done and it's yours to keep forever.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">📱</div>
+      <div class="feature-title">They feel real</div>
+      <div class="feature-body">Tilt to roll them. Shake to jostle the pile. Quietly satisfying in the best way.</div>
+    </div>
+    <div class="feature">
+      <div class="feature-icon">🗄️</div>
+      <div class="feature-title">Build your shelf</div>
+      <div class="feature-body">Every sealed jar earns a spot. Months from now, your shelf is proof you showed up.</div>
+    </div>
+  </section>
+
+  <div class="quote">
+    <p class="quote-text">No streaks to break. No graphs. No guilt. Just a beautiful jar of proof that you showed up.</p>
+  </div>
+
+  <section class="screenshots">
+    <h2 class="section-title">See it in action</h2>
+    <div class="phone-scroll">
+      <div>
+        <div class="phone-frame">
+          <img src="screenshots/screen2.jpg" alt="Meet Mabel" />
+        </div>
+        <p class="screenshot-caption">Meet Mabel</p>
+      </div>
+      <div>
+        <div class="phone-frame">
+          <img src="screenshots/screen4.jpg" alt="Your jar" />
+        </div>
+        <p class="screenshot-caption">Your jar</p>
+      </div>
+      <div>
+        <div class="phone-frame">
+          <img src="screenshots/screen3.jpg" alt="Marbles in motion" />
+        </div>
+        <p class="screenshot-caption">Marbles in motion</p>
+      </div>
+      <div>
+        <div class="phone-frame">
+          <img src="screenshots/screen1.jpg" alt="Fill it, seal it" />
+        </div>
+        <p class="screenshot-caption">Fill it, seal it</p>
+      </div>
+      <div>
+        <div class="phone-frame">
+          <img src="screenshots/screen5.jpg" alt="Your shelf" />
+        </div>
+        <p class="screenshot-caption">Your shelf</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="privacy" id="privacy">
+    <h2 class="section-title">Privacy policy</h2>
+    <p style="font-size:12px;color:rgba(255,255,255,.3);margin-bottom:32px;">Last updated: June 2026</p>
+
+    <div class="privacy-block">
+      <h3>What we collect</h3>
+      <p>To create your account, we store your email address and the habit data you enter — jar names, marble counts, and dates. This is stored securely using Supabase.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3>What we don't collect</h3>
+      <p>We don't collect your name, location, device identifiers, or any personal information beyond what's needed to run your account. We don't sell your data. We don't share it with third parties.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3>Motion data</h3>
+      <p>If you enable tilt and shake, your device motion is used locally to animate the marbles. This data is never sent anywhere.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3>Account deletion</h3>
+      <p>You can delete your account and all associated data at any time by contacting us at <a href="mailto:ministryofmishmash@gmail.com">ministryofmishmash@gmail.com</a>.</p>
+    </div>
+
+    <div class="privacy-block">
+      <h3>Contact</h3>
+      <p>Questions? Reach us at <a href="mailto:ministryofmishmash@gmail.com">ministryofmishmash@gmail.com</a>.</p>
+    </div>
+  </section>
+
+  <footer>
+    Created by <a href="https://ko-fi.com/kataestrophe">@ministryofmishmash</a><br>
+    <a href="mailto:ministryofmishmash@gmail.com">ministryofmishmash@gmail.com</a>
+  </footer>
+</div>
+</body>
+</html>
