@@ -470,5 +470,10 @@
   window.addEventListener('resize', init);
 })();
 </script>
+<script>
+document.querySelectorAll('video').forEach(v => {
+  v.play().catch(() => {});
+});
+</script>
 </body>
 </html>
